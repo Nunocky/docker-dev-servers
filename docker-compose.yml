@@ -1,4 +1,4 @@
-version: '2'
+version: "3"
 volumes:
   redmine_mysql_data:
     driver: local
@@ -54,14 +54,14 @@ services:
   # gitbucket
   gitbucket:
     restart: always
-    image: f99aq8ove/gitbucket
+    image: gitbucket/gitbucket:latest
     depends_on:
       - gitbucket_postgres
     environment:
       GITBUCKET_DB_URL: "jdbc:postgresql://gitbucket_postgres/gitbucket"
       GITBUCKET_DB_USER: gitbucket
       GITBUCKET_DB_PASSWORD: passwd
-      GITBUCKET_OPTS: --prefix=/gitbucket
+      GITBUCKET_PREFIX: "/gitbucket"
     volumes:
       - gitbucket_data:/gitbucket
     ports:
@@ -69,7 +69,7 @@ services:
   # jenkins
   jenkins:
     restart: always
-    image: jenkins/jenkins:lts
+    image: jenkins/jenkins:lts-jdk17
     environment:
       - JENKINS_OPTS=--prefix=/jenkins
     volumes:
